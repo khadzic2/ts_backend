@@ -25,4 +25,6 @@ public class Usercart {
     private User user;
 
     private Integer quantity;
+
+    private String size;
 }

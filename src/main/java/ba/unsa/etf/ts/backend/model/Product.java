@@ -1,11 +1,13 @@
 package ba.unsa.etf.ts.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -18,19 +20,32 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @NotBlank(message = "Name of product must be specified")
     private String name;
     private String info;
-    @NotNull(message = "Price of product must be specified")
     private Double price;
-    @NotNull(message = "Quantity of product must be specified")
     private Integer quantity;
+
+    private String size;
+
+    private String color;
+
+    private LocalDateTime date;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
+//    @JsonIgnore
     private Category category;
 
     @OneToOne (fetch = FetchType.EAGER)
     @JoinColumn(name = "image_id")
+//    @JsonIgnore
     private Image image;
+
+    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Ordersproduct> orders;
+
+    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Usercart> carts;
 }

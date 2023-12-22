@@ -24,4 +24,6 @@ public class Ordersproduct {
     private Product product;
 
     private Integer quantity;
+
+    private String size;
 }
