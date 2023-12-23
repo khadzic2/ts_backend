@@ -24,21 +24,17 @@ public class Product {
     private String info;
     private Double price;
     private Integer quantity;
-
+    private Integer saledQuantity;
     private String size;
-
     private String color;
-
     private LocalDateTime date;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
-//    @JsonIgnore
     private Category category;
 
     @OneToOne (fetch = FetchType.EAGER)
     @JoinColumn(name = "image_id")
-//    @JsonIgnore
     private Image image;
 
     @OneToMany(mappedBy = "product",cascade = CascadeType.ALL)
@@ -47,5 +43,5 @@ public class Product {
 
     @OneToMany(mappedBy = "product",cascade = CascadeType.ALL)
     @JsonIgnore
-    private List<Usercart> carts;
+    private List<Cart> carts;
 }

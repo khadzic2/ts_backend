@@ -2,7 +2,6 @@ package ba.unsa.etf.ts.backend.services;
 
 import ba.unsa.etf.ts.backend.exception.NotFoundException;
 import ba.unsa.etf.ts.backend.model.Orders;
-import ba.unsa.etf.ts.backend.model.Product;
 import ba.unsa.etf.ts.backend.model.User;
 import ba.unsa.etf.ts.backend.repository.OrdersRepository;
 import ba.unsa.etf.ts.backend.repository.UserRepository;
@@ -33,9 +32,10 @@ public class OrdersService {
     public Orders addOrder(AddOrdersRequest newOrder){
         User user = userRepository.findById(newOrder.getUserId()).orElseThrow(()->new NotFoundException("User by id:"+newOrder.getUserId()+" does not exist."));
         Orders order = new Orders();
+        order.setCode("O"+LocalDateTime.now().getYear()+LocalDateTime.now().getMonthValue()+LocalDateTime.now().getDayOfYear()+"T"+LocalDateTime.now().getHour()+LocalDateTime.now().getMinute());
         order.setDateAndTime(LocalDateTime.now());
-        order.setShipped(newOrder.getShipped());
-        order.setDelivered(newOrder.getDelivered());
+        order.setShipped(false);
+        order.setDelivered(false);
         order.setAmount(newOrder.getAmount());
         order.setUser(user);
 
@@ -47,7 +47,6 @@ public class OrdersService {
 
         updateOrder.setDelivered(newOrder.getDelivered());
         updateOrder.setShipped(newOrder.getShipped());
-        updateOrder.setAmount(newOrder.getAmount());
 
         return ordersRepository.save(updateOrder);
     }
@@ -62,5 +61,9 @@ public class OrdersService {
     public String deleteAll(){
         ordersRepository.deleteAll();
         return "Successfully deleted!";
+    }
+
+    public List<Orders> getOrderByUserId(Integer userId) {
+        return ordersRepository.findOrdersByUser_Id(userId);
     }
 }

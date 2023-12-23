@@ -6,7 +6,6 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class UpdateOrdersRequest {
-    private Double amount;
     private Boolean shipped;
     private Boolean delivered;
 }

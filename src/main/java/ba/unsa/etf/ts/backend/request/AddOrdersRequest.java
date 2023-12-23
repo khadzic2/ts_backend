@@ -7,7 +7,5 @@ import lombok.Data;
 @AllArgsConstructor
 public class AddOrdersRequest {
     private Double amount;
-    private Boolean shipped;
-    private Boolean delivered;
     private Integer userId;
 }

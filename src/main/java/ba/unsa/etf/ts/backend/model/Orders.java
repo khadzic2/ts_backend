@@ -1,5 +1,6 @@
 package ba.unsa.etf.ts.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,6 +19,8 @@ public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+
+    private String code;
     private LocalDateTime dateAndTime;
 
     private Double amount;
@@ -29,5 +32,6 @@ public class Orders {
     private User user;
 
     @OneToMany(mappedBy = "orders",cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Ordersproduct> products;
 }

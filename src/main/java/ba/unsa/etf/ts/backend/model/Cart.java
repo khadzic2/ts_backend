@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "usercart")
-public class Usercart {
+@Table(name = "cart")
+public class Cart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

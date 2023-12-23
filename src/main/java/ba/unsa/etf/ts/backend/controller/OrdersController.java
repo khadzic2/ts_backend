@@ -28,13 +28,17 @@ public class OrdersController {
         return ResponseEntity.ok(ordersService.getOrder(id));
     }
 
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<Object> getOrdersByUserId(@PathVariable Integer userId){
+        return ResponseEntity.ok(ordersService.getOrderByUserId(userId));
+    }
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateOrderById(@PathVariable Integer id, @RequestBody @Valid UpdateOrdersRequest newOrder){
         return ResponseEntity.ok(ordersService.updateOrder(id,newOrder));
     }
 
     @PostMapping
-    public ResponseEntity<Object> addProduct(@RequestBody @Valid AddOrdersRequest addOrdersRequest){
+    public ResponseEntity<Object> addOrder(@RequestBody @Valid AddOrdersRequest addOrdersRequest){
         return new ResponseEntity<>(ordersService.addOrder(addOrdersRequest), HttpStatus.CREATED);
     }
 
@@ -44,7 +48,7 @@ public class OrdersController {
     }
 
     @DeleteMapping
-    public ResponseEntity<Object> deleteAllProducts(){
+    public ResponseEntity<Object> deleteAllOrders(){
         return ResponseEntity.ok(ordersService.deleteAll());
     }
 }

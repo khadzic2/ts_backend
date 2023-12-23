@@ -39,6 +39,7 @@ public class ProductService {
         product.setInfo(addProductRequest.getInfo());
         product.setPrice(addProductRequest.getPrice());
         product.setQuantity(addProductRequest.getQuantity());
+        product.setSaledQuantity(0);
         product.setSize(addProductRequest.getSize());
         product.setColor(addProductRequest.getColor());
         product.setDate(LocalDateTime.now());
