@@ -18,8 +18,6 @@ public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-
-    private String code;
     private LocalDateTime dateAndTime;
 
     private Double amount;
@@ -30,6 +28,6 @@ public class Orders {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "orders",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "orders",cascade = CascadeType.ALL)
     private List<Ordersproduct> products;
 }

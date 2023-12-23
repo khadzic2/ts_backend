@@ -8,6 +8,7 @@ import ba.unsa.etf.ts.backend.repository.ProductRepository;
 import ba.unsa.etf.ts.backend.repository.UserRepository;
 import ba.unsa.etf.ts.backend.repository.UsercartRepository;
 import ba.unsa.etf.ts.backend.request.AddCartProductRequest;
+import ba.unsa.etf.ts.backend.request.UpdateCartProductRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,10 +42,11 @@ public class UsercartService {
         return usercartRepository.findById(id).orElseThrow(()->new NotFoundException("Usercart by id:"+id+" does not exist."));
     }
 
-    public Usercart updateUsercart(Integer id, Integer quantity){
+    public Usercart updateUsercart(Integer id, UpdateCartProductRequest newUsercart){
         Usercart updateUsercart = usercartRepository.findById(id).orElseThrow(()->new NotFoundException("Usercart by id:"+id+" does not exist."));
 
-        updateUsercart.setQuantity(quantity);
+        updateUsercart.setQuantity(newUsercart.getQuantity());
+        updateUsercart.setSize(newUsercart.getSize());
 
         return usercartRepository.save(updateUsercart);
     }

@@ -44,7 +44,7 @@ public class UserService {
     }
 
     public User getUserByUsername(String username){
-        User user = userRepository.findUserByUsername(username);
+        User user = userRepository.findByUsername(username);
         if (user == null) throw new NotFoundException("User by username:"+username+" does not exist.");
         return user;
     }
