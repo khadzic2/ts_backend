@@ -1,27 +1,49 @@
 package ba.unsa.etf.ts.backend.request;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
+import ba.unsa.etf.ts.backend.model.User;
+import ba.unsa.etf.ts.backend.utils.validation.annotation.UniqueEmailConstraint;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
+
+import javax.validation.constraints.*;
 
 @Data
 @AllArgsConstructor
 public class AddUserRequest {
-    @Pattern(regexp="^[A-z][A-z0-9-_]{3,23}$")
-    @NotBlank(message = "Username must be specified")
-    private String username;
-    private String password;
-    @NotBlank (message = "First name must be specified")
+
+    private Integer userId = -1;
+
+    @NotEmpty(message = "First name is required")
+    @Size(max = 50, message = "First name can't have more than 50 characters")
+    @NotNull(message = "First name is required")
     private String firstName;
-    @NotBlank (message = "Last name must be specified")
+
+    @NotEmpty(message = "Last name is required")
+    @Size(max = 50, message = "Last name can't have more than 50 characters")
+    @NotNull(message = "Last name is required")
     private String lastName;
-    @NotBlank(message = "Email cannot be null")
-    @Email(message = "Email should be valid")
+
+    @NotEmpty(message = "Email is required!")
+    @NotNull(message = "Email is required")
+    @Email(message = "Wrong email format")
+    @UniqueEmailConstraint
     private String email;
-    @Pattern(regexp = "[0-9]+")
+
+    private String password = "TESt123?";
+
     private String phoneNumber;
 
-    private Integer roleId;
+    @NotNull(message = "User must have a role")
+    private String role;
+
+    public AddUserRequest(User user){
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.email = user.getEmail();
+        this.password = user.getPassword();
+        this.phoneNumber = user.getPhoneNumber();
+        this.role = user.getRole().getRoleName();
+    }
+
 }

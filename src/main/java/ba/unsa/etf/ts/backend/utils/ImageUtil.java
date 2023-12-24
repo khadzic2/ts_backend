@@ -1,4 +1,4 @@
-package ba.unsa.etf.ts.backend.util;
+package ba.unsa.etf.ts.backend.utils;
 
 import java.io.ByteArrayOutputStream;
 import java.util.zip.Deflater;

@@ -3,7 +3,7 @@ package ba.unsa.etf.ts.backend.services;
 import ba.unsa.etf.ts.backend.exception.NotFoundException;
 import ba.unsa.etf.ts.backend.model.Image;
 import ba.unsa.etf.ts.backend.repository.ImageRepository;
-import ba.unsa.etf.ts.backend.util.ImageUtil;
+import ba.unsa.etf.ts.backend.utils.ImageUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 

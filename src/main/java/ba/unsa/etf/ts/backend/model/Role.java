@@ -1,26 +1,26 @@
 package ba.unsa.etf.ts.backend.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-@Entity
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "role")
+@ToString
+@Setter
+@Getter
+@Builder
+@Entity
+@Table(name = "roles")
 public class Role {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-    private String name;
+    @Column(name="role_name")
+    private String roleName;
 
-    @OneToMany(mappedBy = "role",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JsonIgnore
-    private List<User> users;
-
+    @Column(name="role_description")
+    private String roleDescription;
 }

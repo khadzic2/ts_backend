@@ -3,11 +3,12 @@ package ba.unsa.etf.ts.backend.controller;
 import ba.unsa.etf.ts.backend.request.AddProductRequest;
 import ba.unsa.etf.ts.backend.request.UpdateProductRequest;
 import ba.unsa.etf.ts.backend.services.ProductService;
-import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
