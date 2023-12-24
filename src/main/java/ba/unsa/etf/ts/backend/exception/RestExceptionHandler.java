@@ -1,7 +1,7 @@
 package ba.unsa.etf.ts.backend.exception;
 
 import ba.unsa.etf.ts.backend.response.ErrorResponse;
-import jakarta.validation.ConstraintViolationException;
+import javax.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;

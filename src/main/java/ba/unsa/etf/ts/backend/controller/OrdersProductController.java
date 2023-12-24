@@ -2,7 +2,7 @@ package ba.unsa.etf.ts.backend.controller;
 
 import ba.unsa.etf.ts.backend.request.AddOrderProductRequest;
 import ba.unsa.etf.ts.backend.services.OrdersProductService;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/api/orders_product", produces = MediaType.APPLICATION_JSON_VALUE)
+@CrossOrigin(origins = "http://localhost:3000")
 public class OrdersProductController {
 
     private final OrdersProductService ordersProductService;

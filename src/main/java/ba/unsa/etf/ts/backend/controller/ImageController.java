@@ -12,6 +12,7 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
+@CrossOrigin(origins = "http://localhost:3000")
 public class ImageController {
 
     private final ImageService imageService;

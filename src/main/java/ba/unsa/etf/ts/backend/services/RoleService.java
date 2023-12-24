@@ -1,6 +1,5 @@
 package ba.unsa.etf.ts.backend.services;
 
-import ba.unsa.etf.ts.backend.exception.NotFoundException;
 import ba.unsa.etf.ts.backend.model.Role;
 import ba.unsa.etf.ts.backend.repository.RoleRepository;
 import ba.unsa.etf.ts.backend.request.AddRoleRequest;

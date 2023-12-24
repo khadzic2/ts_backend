@@ -23,9 +23,10 @@ public class BackendApplication {
         return args->{
             //role
             Role adminId = roleService.addRole(new AddRoleRequest("ADMIN"));
-            Role userId = roleService.addRole(new AddRoleRequest("COSTUMER"));
+            Role userId = roleService.addRole(new AddRoleRequest("USER"));
 
-            User khadzic = userService.addUser(new AddUserRequest("khadzic2","kHadzic2509!@#","Kanita","Hadzic","khadzic2@etf.unsa.ba","062054882",userId.getId()));
+            User admin = userService.addUser(new AddUserRequest("admin","Admin123!@#","Admin","admin","admin@gmail.com",null, adminId.getId()));
+            User khadzic = userService.addUser(new AddUserRequest("khadzic2","Khadzic2509!@#","Kanita","Hadzic","khadzic2@etf.unsa.ba","062054882",userId.getId()));
         };
     }
 //    @Bean

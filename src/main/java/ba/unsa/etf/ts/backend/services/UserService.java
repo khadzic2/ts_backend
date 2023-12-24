@@ -1,5 +1,6 @@
 package ba.unsa.etf.ts.backend.services;
 
+import ba.unsa.etf.ts.backend.exception.BadRequestException;
 import ba.unsa.etf.ts.backend.exception.NotFoundException;
 import ba.unsa.etf.ts.backend.model.Role;
 import ba.unsa.etf.ts.backend.model.User;
@@ -7,6 +8,7 @@ import ba.unsa.etf.ts.backend.repository.RoleRepository;
 import ba.unsa.etf.ts.backend.repository.UserRepository;
 import ba.unsa.etf.ts.backend.request.AddUserRequest;
 import ba.unsa.etf.ts.backend.request.UpdateUserRequest;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,7 +27,17 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User addUser(AddUserRequest addUserRequest){
+    public User addUser(AddUserRequest addUserRequest) throws BadRequestException {
+        User user1 = userRepository.findByUsername(addUserRequest.getUsername());
+        if(user1 != null){
+            throw new BadRequestException("Username "+addUserRequest.getUsername()+" already exist.");
+        }
+        
+        User user2 = userRepository.findByEmail(addUserRequest.getEmail());
+        if(user2 != null){
+            throw new BadRequestException("Email "+addUserRequest.getEmail()+" already exist.");
+        }
+
         Role role = roleRepository.findById(addUserRequest.getRoleId()).orElseThrow(()->new NotFoundException("Role by id:"+addUserRequest.getRoleId()+" does not exist."));
         User user = new User();
         user.setFirstName(addUserRequest.getFirstName());
