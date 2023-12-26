@@ -9,11 +9,6 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class UpdateUserRequest {
-    @Pattern(regexp="^[A-z][A-z0-9-_]{3,23}$")
-    @NotBlank(message = "Username must be specified")
-    private String username;
-
-    private String password;
     @NotBlank (message = "First name must be specified")
     private String firstName;
     @NotBlank (message = "Last name must be specified")
