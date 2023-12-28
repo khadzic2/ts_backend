@@ -59,7 +59,7 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     @JsonIgnore
-    private List<Cart> cart;
+    private List<Cart> carts;
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     @JsonIgnore
@@ -141,12 +141,12 @@ public class User implements UserDetails {
         this.userTokens = userTokens;
     }
 
-    public List<Cart> getCart() {
-        return cart;
+    public List<Cart> getCarts() {
+        return carts;
     }
 
-    public void setCart(List<Cart> cart) {
-        this.cart = cart;
+    public void setCarts(List<Cart> carts) {
+        this.carts = carts;
     }
 
     public List<Orders> getOrders() {
@@ -161,7 +161,7 @@ public class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Role role = getRole();
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_"+role.getName()));
+        authorities.add(new SimpleGrantedAuthority(role.getName()));
         return authorities;
     }
 

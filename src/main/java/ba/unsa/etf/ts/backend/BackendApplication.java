@@ -17,8 +17,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 
 import java.time.LocalDateTime;
 
-@EnableJpaRepositories(basePackages = { "ba.unsa.etf.ts.backend.repository","ba.unsa.etf.ts.backend.security.repository"})
-@EntityScan(basePackages = {"ba.unsa.etf.ts.backend.model","ba.unsa.etf.ts.backend.request"})
+@EnableJpaRepositories(basePackages = { "ba.unsa.etf.ts.backend.repository","ba.unsa.etf.ts.backend.security.repository","ba.unsa.etf.ts.backend.security.token"})
+@EntityScan(basePackages = {"ba.unsa.etf.ts.backend.model","ba.unsa.etf.ts.backend.request","ba.unsa.etf.ts.backend.security.entity","ba.unsa.etf.ts.backend.security.token"})
 @EnableScheduling
 @SpringBootApplication
 public class BackendApplication implements CommandLineRunner{

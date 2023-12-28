@@ -2,6 +2,7 @@ package ba.unsa.etf.ts.backend.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -48,6 +49,8 @@ public class WebSecurityConfig{ // configurer adapter je deprecated ubit cu se
                 .disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/auth/**")
+                .permitAll()
+                .requestMatchers(HttpMethod.POST,"/api/user")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
