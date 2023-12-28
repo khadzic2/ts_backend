@@ -2,7 +2,7 @@ package ba.unsa.etf.ts.backend.controller;
 
 import ba.unsa.etf.ts.backend.request.AddOrderProductRequest;
 import ba.unsa.etf.ts.backend.services.OrdersProductService;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

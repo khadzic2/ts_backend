@@ -1,11 +1,9 @@
-package ba.unsa.etf.ts.backend.services;
+package ba.unsa.etf.ts.backend.security.service;
 
-import ba.unsa.etf.ts.backend.model.Role;
-import ba.unsa.etf.ts.backend.repository.RoleRepository;
 import ba.unsa.etf.ts.backend.request.AddRoleRequest;
+import ba.unsa.etf.ts.backend.security.entity.Role;
+import ba.unsa.etf.ts.backend.security.repository.RoleRepository;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class RoleService {

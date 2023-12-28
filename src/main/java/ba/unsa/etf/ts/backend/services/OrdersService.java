@@ -2,11 +2,11 @@ package ba.unsa.etf.ts.backend.services;
 
 import ba.unsa.etf.ts.backend.exception.NotFoundException;
 import ba.unsa.etf.ts.backend.model.Orders;
-import ba.unsa.etf.ts.backend.model.User;
 import ba.unsa.etf.ts.backend.repository.OrdersRepository;
-import ba.unsa.etf.ts.backend.repository.UserRepository;
 import ba.unsa.etf.ts.backend.request.AddOrdersRequest;
 import ba.unsa.etf.ts.backend.request.UpdateOrdersRequest;
+import ba.unsa.etf.ts.backend.security.entity.User;
+import ba.unsa.etf.ts.backend.security.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

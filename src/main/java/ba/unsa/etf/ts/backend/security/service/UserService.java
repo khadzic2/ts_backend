@@ -1,14 +1,15 @@
-package ba.unsa.etf.ts.backend.services;
+package ba.unsa.etf.ts.backend.security.service;
 
 import ba.unsa.etf.ts.backend.exception.BadRequestException;
 import ba.unsa.etf.ts.backend.exception.NotFoundException;
-import ba.unsa.etf.ts.backend.model.Role;
-import ba.unsa.etf.ts.backend.model.User;
-import ba.unsa.etf.ts.backend.repository.RoleRepository;
-import ba.unsa.etf.ts.backend.repository.UserRepository;
-import ba.unsa.etf.ts.backend.request.AddUserRequest;
-import ba.unsa.etf.ts.backend.request.UpdateUserRequest;
+import ba.unsa.etf.ts.backend.security.request.AddUserRequest;
+import ba.unsa.etf.ts.backend.security.request.UpdateUserRequest;
 
+import ba.unsa.etf.ts.backend.security.entity.Role;
+import ba.unsa.etf.ts.backend.security.entity.User;
+import ba.unsa.etf.ts.backend.security.repository.RoleRepository;
+import ba.unsa.etf.ts.backend.security.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,9 +19,11 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
+    private final PasswordEncoder passwordEncoder;
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<User> getAllUsers(){
@@ -28,24 +31,18 @@ public class UserService {
     }
 
     public User addUser(AddUserRequest addUserRequest) throws BadRequestException {
-        User user1 = userRepository.findByUsername(addUserRequest.getUsername());
-        if(user1 != null){
-            throw new BadRequestException("Username "+addUserRequest.getUsername()+" already exist.");
-        }
-        
-        User user2 = userRepository.findByEmail(addUserRequest.getEmail());
+        User user2 = userRepository.findByEmail(addUserRequest.getEmail()).orElse(null);
         if(user2 != null){
             throw new BadRequestException("Email "+addUserRequest.getEmail()+" already exist.");
         }
 
         Role role = roleRepository.findById(addUserRequest.getRoleId()).orElseThrow(()->new NotFoundException("Role by id:"+addUserRequest.getRoleId()+" does not exist."));
         User user = new User();
-        user.setFirstName(addUserRequest.getFirstName());
-        user.setLastName(addUserRequest.getLastName());
+        user.setFirstname(addUserRequest.getFirstName());
+        user.setLastname(addUserRequest.getLastName());
         user.setEmail(addUserRequest.getEmail());
         user.setPhoneNumber(addUserRequest.getPhoneNumber());
-        user.setPassword(addUserRequest.getPassword());
-        user.setUsername(addUserRequest.getUsername());
+        user.setPassword(passwordEncoder.encode(addUserRequest.getPassword()));
         user.setRole(role);
 
         return userRepository.save(user);
@@ -55,18 +52,16 @@ public class UserService {
         return userRepository.findById(id).orElseThrow(()->new NotFoundException("User by id:"+id+" does not exist."));
     }
 
-    public User getUserByUsername(String username){
-        User user = userRepository.findByUsername(username);
-        if (user == null) throw new NotFoundException("User by username:"+username+" does not exist.");
-        return user;
-    }
+//    public User getUserByUsername(String username){
+//        User user = userRepository.findByUsername(username);
+//        if (user == null) throw new NotFoundException("User by username:"+username+" does not exist.");
+//        return user;
+//    }
 
     public User updateUser(Integer id, UpdateUserRequest newUser){
         User updateUser = userRepository.findById(id).orElseThrow(()->new NotFoundException("User by id:"+id+" does not exist."));
-        updateUser.setUsername(newUser.getUsername());
-        updateUser.setPassword(newUser.getPassword());
-        updateUser.setFirstName(newUser.getFirstName());
-        updateUser.setLastName(newUser.getLastName());
+        updateUser.setFirstname(newUser.getFirstName());
+        updateUser.setLastname(newUser.getLastName());
         updateUser.setEmail(newUser.getEmail());
         updateUser.setPhoneNumber(newUser.getPhoneNumber());
 

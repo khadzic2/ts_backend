@@ -1,6 +1,7 @@
 package ba.unsa.etf.ts.backend.model;
 
-import javax.persistence.*;
+import ba.unsa.etf.ts.backend.security.entity.User;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

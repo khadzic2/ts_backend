@@ -1,14 +1,15 @@
-package ba.unsa.etf.ts.backend.controller;
+package ba.unsa.etf.ts.backend.security.controller;
 
 import ba.unsa.etf.ts.backend.exception.BadRequestException;
-import ba.unsa.etf.ts.backend.request.AddUserRequest;
-import ba.unsa.etf.ts.backend.request.UpdateUserRequest;
+import ba.unsa.etf.ts.backend.security.request.AddUserRequest;
+import ba.unsa.etf.ts.backend.security.request.UpdateUserRequest;
 import ba.unsa.etf.ts.backend.response.ErrorResponse;
-import ba.unsa.etf.ts.backend.services.UserService;
-import javax.validation.Valid;
+import ba.unsa.etf.ts.backend.security.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,6 +23,7 @@ public class UserController {
         this.userService = userService;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public ResponseEntity<Object> getAllUsers(){
         return ResponseEntity.ok(userService.getAllUsers());
@@ -32,10 +34,10 @@ public class UserController {
         return ResponseEntity.ok(userService.getUser(id));
     }
 
-    @GetMapping("/username/{username}")
-    public ResponseEntity<Object> getUserByUsername(@PathVariable String username){
-        return ResponseEntity.ok(userService.getUserByUsername(username));
-    }
+//    @GetMapping("/username/{username}")
+//    public ResponseEntity<Object> getUserByUsername(@PathVariable String username){
+//        return ResponseEntity.ok(userService.getUserByUsername(username));
+//    }
 
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateUserById(@PathVariable Integer id, @RequestBody @Valid UpdateUserRequest newUser){
