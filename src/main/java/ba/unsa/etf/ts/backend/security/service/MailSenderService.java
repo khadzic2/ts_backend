@@ -27,6 +27,7 @@ public class MailSenderService {
 
     public void constructResetTokenEmail( String token, String email) {
         String url = environment.getProperty("reset_password.url") + token;
+
         String body = "Poštovani, \nPrimili ste ovaj e-mail jer ste zatražili obnovu lozinke za Vaš račun na aplikaciji Centar za podršku. \n" +
                 "\n" +
                 "Kliknite na sljedeći link kako biste pristupili obrascu za obnovu lozinke:\n" +

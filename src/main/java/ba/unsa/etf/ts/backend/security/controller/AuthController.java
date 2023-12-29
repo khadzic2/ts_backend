@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -78,6 +79,7 @@ public class AuthController {
         }
     }
 
+    @PreAuthorize("hasAuthority('USER')")
     @PutMapping(path="/change-password")
     public @ResponseBody
     ResponseEntity<String> changePassword(@Valid  @RequestBody ChangePasswordRequest request, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
@@ -99,6 +101,7 @@ public class AuthController {
         try {
             passwordResetTokenService.resetPassword(request.getEmail());
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return ResponseEntity
                     .status(HttpStatus.NOT_FOUND)
                     .body("User with this email does not exist!");
