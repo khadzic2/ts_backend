@@ -23,7 +23,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping
     public ResponseEntity<Object> getAllUsers(){
         return ResponseEntity.ok(userService.getAllUsers());

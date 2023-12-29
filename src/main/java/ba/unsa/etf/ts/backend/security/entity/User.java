@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import lombok.ToString;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.security.core.GrantedAuthority;
@@ -55,6 +56,7 @@ public class User implements UserDetails {
     private Role role;
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Token> userTokens;
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
