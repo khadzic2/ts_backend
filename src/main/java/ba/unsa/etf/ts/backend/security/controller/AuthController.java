@@ -1,10 +1,8 @@
 package ba.unsa.etf.ts.backend.security.controller;
 
-import ba.unsa.etf.ts.backend.security.repository.UserRepository;
 import ba.unsa.etf.ts.backend.security.request.*;
 import ba.unsa.etf.ts.backend.security.service.AuthenticationService;
 import ba.unsa.etf.ts.backend.security.service.JwtService;
-import ba.unsa.etf.ts.backend.security.service.PasswordResetTokenService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -30,25 +28,9 @@ public class AuthController {
     @Autowired
     private JwtService jwtService;
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private PasswordResetTokenService passwordResetTokenService;
-
     public AuthController(AuthenticationService authenticationService) {
         this.authenticationService = authenticationService;
     }
-
-    /*
-    @GetMapping("/user")
-    public ResponseEntity<User> getUserByEmail(@RequestParam String email) {
-        var user = authenticationService.getUserByEmail(email);
-        if(user == null)
-            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
-
-        return  ResponseEntity.ok(user);
-    }*/
 
 
     @PostMapping("/login")
@@ -94,41 +76,4 @@ public class AuthController {
                     .body("You shall not pass!");
         }
     }
-
-//    @PostMapping("/reset-password/request")
-//    public ResponseEntity<String> resetPasswordRequest(@RequestBody ResetPasswordRequest request) {
-//
-//        try {
-//            passwordResetTokenService.resetPassword(request.getEmail());
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//            return ResponseEntity
-//                    .status(HttpStatus.NOT_FOUND)
-//                    .body("User with this email does not exist!");
-//        }
-//
-//
-//        return ResponseEntity
-//                .status(HttpStatus.OK)
-//                .body("Email with reset url sent");
-//    }
-//
-//    @PostMapping("/reset-password")
-//    public ResponseEntity<String> resetPassword(@RequestBody ResetPasswordWithTokenRequest request) {
-//        String email = passwordResetTokenService.validatePasswordResetToken(request.getToken());
-//
-//
-//        if(email!=null) {
-//            authenticationService.changePassword(email, request.getPassword());
-//
-//            return (ResponseEntity<String>) ResponseEntity
-//                    .status(HttpStatus.OK)
-//                    .body("Password successfully changed!");
-//        } else {
-//            return (ResponseEntity<String>) ResponseEntity
-//                    .status(HttpStatus.BAD_REQUEST)
-//                    .body("Invalid or expired token!");
-//        }
-//    }
-
 }

@@ -4,19 +4,15 @@ import ba.unsa.etf.ts.backend.security.repository.RoleRepository;
 import ba.unsa.etf.ts.backend.security.repository.UserRepository;
 import ba.unsa.etf.ts.backend.security.request.AuthCredentials;
 import ba.unsa.etf.ts.backend.security.request.AuthResponse;
-import ba.unsa.etf.ts.backend.security.request.RegisterRequest;
 import ba.unsa.etf.ts.backend.security.entity.User;
 import ba.unsa.etf.ts.backend.security.token.Token;
 import ba.unsa.etf.ts.backend.security.token.TokenRepository;
 import ba.unsa.etf.ts.backend.security.token.TokenType;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,12 +24,9 @@ import java.util.Map;
 
 @Service
 public class AuthenticationService {
-    private static final Logger logger = LoggerFactory.getLogger(AuthenticationService.class);
-    @Autowired
-    private final UserRepository userRepository;
 
     @Autowired
-    private final RoleRepository roleRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     private final TokenRepository tokenRepository;
@@ -46,29 +39,11 @@ public class AuthenticationService {
 
     public AuthenticationService(UserRepository userRepository, RoleRepository roleRepository, TokenRepository tokenRepository, PasswordEncoder passwordEncoder, JwtService jwtService, AuthenticationManager authenticationManager) {
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
         this.tokenRepository = tokenRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
     }
-
-//    public AuthResponse register(RegisterRequest registerRequest) {
-//        var role = roleRepository.findById(registerRequest.getRoleId()).get();
-//        var user = new User(registerRequest.getFirstname(),
-//                registerRequest.getLastname(),
-//                registerRequest.getEmail(),
-//                passwordEncoder.encode(registerRequest.getPassword()),
-//                role);
-//
-//        var savedUser = userRepository.save(user);
-//        Map<String,Object> roleMap= new HashMap<>();
-//        roleMap.put("Role",role.getName());
-//        var jwtToken = jwtService.generateToken(roleMap,user);
-//        var refreshToken = jwtService.generateRefreshToken(roleMap, user);
-//        saveToken(savedUser, jwtToken);
-//        return  new AuthResponse(jwtToken,refreshToken,savedUser);
-//    }
 
     private void saveToken(User savedUser, String jwtToken) {
         var token = new Token(jwtToken, TokenType.BEARER,false,false, savedUser);

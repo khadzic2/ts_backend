@@ -16,7 +16,7 @@ import org.springframework.security.web.authentication.logout.LogoutHandler;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-public class WebSecurityConfig{ // configurer adapter je deprecated ubit cu se
+public class WebSecurityConfig{
 
     private final AuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authProvider;
@@ -27,20 +27,6 @@ public class WebSecurityConfig{ // configurer adapter je deprecated ubit cu se
         this.authProvider = authProvider;
         this.logoutHandler = logoutHandler;
     }
-
-
-
-
-    /*@Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http)
-            throws Exception {
-        return http.getSharedObject(AuthenticationManagerBuilder.class)
-                .userDetailsService(userDetailsService())
-                .passwordEncoder(passwordEncoder())
-                .and()
-                .build();
-    }*/
-
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -56,11 +42,15 @@ public class WebSecurityConfig{ // configurer adapter je deprecated ubit cu se
                 .permitAll()
                 .requestMatchers(HttpMethod.GET,"/api/category/{id}")
                 .permitAll()
+                .requestMatchers(HttpMethod.GET,"/api/category/products")
+                .permitAll()
                 .requestMatchers(HttpMethod.GET,"/api/image/{id}")
                 .permitAll()
                 .requestMatchers(HttpMethod.GET,"/api/product")
                 .permitAll()
                 .requestMatchers(HttpMethod.GET,"/api/product/{id}")
+                .permitAll()
+                .requestMatchers(HttpMethod.GET,"/api/product/name/{name}")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
@@ -77,28 +67,6 @@ public class WebSecurityConfig{ // configurer adapter je deprecated ubit cu se
                     SecurityContextHolder.clearContext();
                 }));
 
-        /*http.csrf()
-                .disable()
-                .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.DELETE)
-                .hasRole("ADMIN")
-                .requestMatchers("/admin/**")
-                .hasAnyRole("ADMIN")
-                .requestMatchers("/user/**")
-                .hasAnyRole("USER", "ADMIN")
-                .requestMatchers("/login/**")
-                .anonymous()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .httpBasic()
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);*/
-
         return http.build();
     }
-
-
-
 }
