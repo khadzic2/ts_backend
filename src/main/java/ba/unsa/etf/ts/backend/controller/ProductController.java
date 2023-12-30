@@ -29,6 +29,11 @@ public class ProductController {
     public ResponseEntity<Object> getProductById(@PathVariable Integer id){
         return ResponseEntity.ok(productService.getProduct(id));
     }
+    @GetMapping("/product/name/{name}")
+    public ResponseEntity<Object> getProductsByName(@PathVariable String name){
+        return ResponseEntity.ok(productService.getAllProductsByName(name));
+    }
+
     @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/product/{id}")
     public ResponseEntity<Object> updateProductById(@PathVariable Integer id, @RequestBody @Valid UpdateProductRequest newProduct){
@@ -49,9 +54,4 @@ public class ProductController {
     public ResponseEntity<Object> deleteAllProducts(){
         return ResponseEntity.ok(productService.deleteAll());
     }
-
-//    @DeleteMapping("/product/category/{id}")
-//    public ResponseEntity<Object> deleteAllProductsByCategoryId(@PathVariable Integer id){
-//        return ResponseEntity.ok(productService.deleteAllByCategoryId(id));
-//    }
 }

@@ -1,5 +1,6 @@
 package ba.unsa.etf.ts.backend.services;
 
+import ba.unsa.etf.ts.backend.exception.BadRequestException;
 import ba.unsa.etf.ts.backend.exception.NotFoundException;
 import ba.unsa.etf.ts.backend.model.Product;
 import ba.unsa.etf.ts.backend.model.Cart;
@@ -7,6 +8,7 @@ import ba.unsa.etf.ts.backend.repository.ProductRepository;
 import ba.unsa.etf.ts.backend.repository.CartRepository;
 import ba.unsa.etf.ts.backend.request.AddCartProductRequest;
 import ba.unsa.etf.ts.backend.request.UpdateCartProductRequest;
+import ba.unsa.etf.ts.backend.response.GetCartProductsResponse;
 import ba.unsa.etf.ts.backend.security.entity.User;
 import ba.unsa.etf.ts.backend.security.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -27,9 +29,19 @@ public class CartService {
         this.userRepository = userRepository;
     }
 
-    public List<Cart> getAllUsercartsByUserId(String email){
+    private List<Cart> getAllUsercartsByUserId(String email){
         User user = userRepository.findByEmail(email).orElseThrow();
         return cartRepository.findAllByUser_Id(user.getId());
+    }
+
+    public GetCartProductsResponse getCartByUser(String email){
+        double amount = 0.0;
+        List<Cart> products = getAllUsercartsByUserId(email);
+        for (Cart cart: products) {
+            amount += cart.getQuantity()*cart.getProduct().getPrice();
+        }
+
+        return new GetCartProductsResponse(products,amount);
     }
 
     public Cart addUsercart(AddCartProductRequest addCartProductRequest){
@@ -49,6 +61,9 @@ public class CartService {
             usercart.setId(exist.getId());
             usercart.setQuantity(usercart.getQuantity() + exist.getQuantity());
         }
+
+        if(usercart.getQuantity() > usercart.getProduct().getQuantity()) throw new BadRequestException("The desired quantity of products exceeds the number of products in the stock.");
+
         return cartRepository.save(usercart);
     }
 
@@ -72,9 +87,7 @@ public class CartService {
 
         if(products.size() > 0){
             List<Cart> filterProducts = products.stream().filter(cart -> cart.getProduct().getId().equals(productId)).toList();
-            System.out.println("Postoji 1");
             if (filterProducts.size() > 0){
-                System.out.println("Postoji 2");
                 updateCart = filterProducts.get(0);
             }
         }
@@ -83,6 +96,8 @@ public class CartService {
             throw new NotFoundException("Usercart by product id:" + productId + " does not exist.");
 
         updateCart.setQuantity(newUsercart.getQuantity());
+
+        if(updateCart.getQuantity() > updateCart.getProduct().getQuantity()) throw new BadRequestException("The desired quantity of products exceeds the number of products in the stock.");
 
         return cartRepository.save(updateCart);
     }

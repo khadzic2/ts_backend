@@ -4,8 +4,10 @@ import ba.unsa.etf.ts.backend.exception.BadRequestException;
 import ba.unsa.etf.ts.backend.security.request.AddUserRequest;
 import ba.unsa.etf.ts.backend.security.request.UpdateUserRequest;
 import ba.unsa.etf.ts.backend.response.ErrorResponse;
+import ba.unsa.etf.ts.backend.security.service.JwtService;
 import ba.unsa.etf.ts.backend.security.service.UserService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +20,10 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
-
-    public UserController(UserService userService) {
+    private final JwtService jwtService;
+    public UserController(UserService userService, JwtService jwtService) {
         this.userService = userService;
+        this.jwtService = jwtService;
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -34,15 +37,18 @@ public class UserController {
     public ResponseEntity<Object> getUserById(@PathVariable Integer id){
         return ResponseEntity.ok(userService.getUser(id));
     }
+    @PreAuthorize("hasAnyAuthority('USER','ADMIN')")
+    @GetMapping("/details")
+    public ResponseEntity<Object> getUserByEmail(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+        String email = jwtService.extractUsername(token.substring(7));
+        return ResponseEntity.ok(userService.getUserByEmail(email));
+    }
 
-//    @GetMapping("/username/{username}")
-//    public ResponseEntity<Object> getUserByUsername(@PathVariable String username){
-//        return ResponseEntity.ok(userService.getUserByUsername(username));
-//    }
     @PreAuthorize("hasAuthority('USER')")
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> updateUserById(@PathVariable Integer id, @RequestBody @Valid UpdateUserRequest newUser){
-        return ResponseEntity.ok(userService.updateUser(id,newUser));
+    @PutMapping
+    public ResponseEntity<Object> updateUserById(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @RequestBody @Valid UpdateUserRequest newUser){
+        String email = jwtService.extractUsername(token.substring(7));
+        return ResponseEntity.ok(userService.updateUser(email,newUser));
     }
 
     @PostMapping
@@ -53,9 +59,11 @@ public class UserController {
             return ResponseEntity.badRequest().body(new ErrorResponse("Already exist",e.getMessage()));
         }
     }
+
     @PreAuthorize("hasAuthority('USER')")
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteUser(@PathVariable Integer id){
-        return ResponseEntity.ok(userService.deleteUser(id));
+    @DeleteMapping
+    public ResponseEntity<Object> deleteUser(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+        String email = jwtService.extractUsername(token.substring(7));
+        return ResponseEntity.ok(userService.deleteUser(email));
     }
 }

@@ -2,10 +2,11 @@ package ba.unsa.etf.ts.backend.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
-public class AddOrdersRequest {
-    private Double amount;
-    private Integer userId;
+public class GetProductsByCategoryName {
+    String name;
 }

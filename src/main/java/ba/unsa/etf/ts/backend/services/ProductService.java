@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -29,6 +30,10 @@ public class ProductService {
 
     public List<Product> getAllProducts(){
         return productRepository.findAll();
+    }
+
+    public List<Product> getAllProductsByName(String name){
+        return getAllProducts().stream().filter(product -> product.getName().contains(name)).collect(Collectors.toList());
     }
 
     public Product addProduct(AddProductRequest addProductRequest){

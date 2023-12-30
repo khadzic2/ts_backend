@@ -29,7 +29,7 @@ public class CartController {
     @GetMapping("/user")
     public ResponseEntity<Object> getAllByUserId(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
         var email = jwtService.extractUsername(token.substring(7));
-        return ResponseEntity.ok(cartService.getAllUsercartsByUserId(email));
+        return ResponseEntity.ok(cartService.getCartByUser(email));
     }
     @PreAuthorize("hasAuthority('USER')")
     @PostMapping
@@ -53,9 +53,7 @@ public class CartController {
     @PreAuthorize("hasAuthority('USER')")
     @PutMapping("/product/{productId}")
     public ResponseEntity<Object> updateCartProductUser(@PathVariable Integer productId, @RequestBody @Valid UpdateCartProductRequest newCart, @RequestHeader(HttpHeaders.AUTHORIZATION) String token){
-        System.out.println("Update product");
         var email = jwtService.extractUsername(token.substring(7));
-        System.out.println("Update product");
         return ResponseEntity.ok(cartService.updateCartProductUser(productId,newCart,email));
     }
 
@@ -66,7 +64,7 @@ public class CartController {
     }
 
     @PreAuthorize("hasAuthority('USER')")
-    @DeleteMapping("/user/{userId}")
+    @DeleteMapping("/user")
     public ResponseEntity<Object> deleteAllByUserId(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
         var email = jwtService.extractUsername(token.substring(7));
         return ResponseEntity.ok(cartService.deleteUsercartByUserId(email));

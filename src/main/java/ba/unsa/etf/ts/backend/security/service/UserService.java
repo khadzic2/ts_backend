@@ -52,26 +52,25 @@ public class UserService {
         return userRepository.findById(id).orElseThrow(()->new NotFoundException("User by id:"+id+" does not exist."));
     }
 
-//    public User getUserByUsername(String username){
-//        User user = userRepository.findByUsername(username);
-//        if (user == null) throw new NotFoundException("User by username:"+username+" does not exist.");
-//        return user;
-//    }
+    public User getUserByEmail(String email){
+        User user = userRepository.findByEmail(email).orElse(null);
+        if (user == null) throw new NotFoundException("User by username:"+email+" does not exist.");
+        return user;
+    }
 
-    public User updateUser(Integer id, UpdateUserRequest newUser){
-        User updateUser = userRepository.findById(id).orElseThrow(()->new NotFoundException("User by id:"+id+" does not exist."));
+    public User updateUser(String email, UpdateUserRequest newUser){
+        User updateUser = userRepository.findByEmail(email).orElseThrow(()->new NotFoundException("User by email:"+email+" does not exist."));
         updateUser.setFirstname(newUser.getFirstName());
         updateUser.setLastname(newUser.getLastName());
-        updateUser.setEmail(newUser.getEmail());
         updateUser.setPhoneNumber(newUser.getPhoneNumber());
 
         return userRepository.save(updateUser);
     }
 
-    public String deleteUser(Integer id){
-        User user = userRepository.findById(id).orElse(null);
-        if(user == null) throw new NotFoundException("User by id:"+id+" does not exist.");
-        userRepository.deleteById(id);
+    public String deleteUser(String email){
+        User user = userRepository.findByEmail(email).orElse(null);
+        if(user == null) throw new NotFoundException("User by email:"+email+" does not exist.");
+        userRepository.deleteById(user.getId());
         return "User successfully deleted!";
     }
 }

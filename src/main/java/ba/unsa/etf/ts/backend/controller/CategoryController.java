@@ -1,6 +1,7 @@
 package ba.unsa.etf.ts.backend.controller;
 
 import ba.unsa.etf.ts.backend.model.Category;
+import ba.unsa.etf.ts.backend.request.GetProductsByCategoryName;
 import ba.unsa.etf.ts.backend.services.CategoryService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -31,6 +32,11 @@ public class CategoryController {
     @GetMapping("/category/{id}")
     public ResponseEntity<Object> getCategoryById(@PathVariable Integer id){
         return ResponseEntity.ok(categoryService.getCategory(id));
+    }
+
+    @GetMapping("/category/products")
+    public ResponseEntity<Object> getProductsByCategoryName(@RequestBody GetProductsByCategoryName name){
+        return ResponseEntity.ok(categoryService.getProductsByCategoryName(name));
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")

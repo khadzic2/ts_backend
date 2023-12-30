@@ -29,11 +29,11 @@ public class OrdersProductController {
     public ResponseEntity<Object> getOrdersproductById(@PathVariable Integer id){
         return ResponseEntity.ok(ordersProductService.getOrdersproduct(id));
     }
-    @PreAuthorize("hasAuthority('USER')")
-    @PostMapping
-    public ResponseEntity<Object> addOrdersproduct(@RequestBody @Valid AddOrderProductRequest newOrderproduct){
-        return new ResponseEntity<>(ordersProductService.addOrdersproduct(newOrderproduct), HttpStatus.CREATED);
-    }
+//    @PreAuthorize("hasAuthority('USER')")
+//    @PostMapping
+//    public ResponseEntity<Object> addOrdersproduct(@RequestBody @Valid AddOrderProductRequest newOrderproduct){
+//        return new ResponseEntity<>(ordersProductService.addOrdersproduct(newOrderproduct), HttpStatus.CREATED);
+//    }
     @PreAuthorize("hasAuthority('USER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteOrdersproduct(@PathVariable Integer id){

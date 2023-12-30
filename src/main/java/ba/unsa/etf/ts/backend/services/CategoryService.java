@@ -2,7 +2,10 @@ package ba.unsa.etf.ts.backend.services;
 
 import ba.unsa.etf.ts.backend.exception.NotFoundException;
 import ba.unsa.etf.ts.backend.model.Category;
+import ba.unsa.etf.ts.backend.model.Product;
 import ba.unsa.etf.ts.backend.repository.CategoryRepository;
+import ba.unsa.etf.ts.backend.repository.ProductRepository;
+import ba.unsa.etf.ts.backend.request.GetProductsByCategoryName;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,9 +13,11 @@ import java.util.List;
 @Service
 public class CategoryService {
     private final CategoryRepository categoryRepository;
+    private final ProductRepository productRepository;
 
-    public CategoryService(CategoryRepository categoryRepository) {
+    public CategoryService(CategoryRepository categoryRepository, ProductRepository productRepository) {
         this.categoryRepository = categoryRepository;
+        this.productRepository = productRepository;
     }
 
     public Category addCategory(Category category){
@@ -25,6 +30,10 @@ public class CategoryService {
 
     public List<Category> getAllCategories(){
         return categoryRepository.findAll();
+    }
+
+    public List<Product> getProductsByCategoryName(GetProductsByCategoryName name){
+        return productRepository.findAllByCategory_Name(name.getName());
     }
 
     public String deleteCategory(Integer id){
