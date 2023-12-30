@@ -22,6 +22,7 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
+
     @GetMapping("/category")
     public ResponseEntity<List<Category>> getAllCategories(){
         return ResponseEntity.ok(categoryService.getAllCategories());
@@ -37,12 +38,12 @@ public class CategoryController {
     public ResponseEntity<Object> addCategory(@RequestBody @Valid Category category){
         return new ResponseEntity<>(categoryService.addCategory(category), HttpStatus.CREATED);
     }
-
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/category/{id}")
     public ResponseEntity<Object> deleteCategory(@PathVariable Integer id){
         return ResponseEntity.ok(categoryService.deleteCategory(id));
     }
-
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/category")
     public ResponseEntity<Object> deleteAllCategories(){
         return ResponseEntity.ok(categoryService.deleteAll());

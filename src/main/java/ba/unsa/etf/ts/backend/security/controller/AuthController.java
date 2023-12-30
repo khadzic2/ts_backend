@@ -95,40 +95,40 @@ public class AuthController {
         }
     }
 
-    @PostMapping("/reset-password/request")
-    public ResponseEntity<String> resetPasswordRequest(@RequestBody ResetPasswordRequest request) {
-
-        try {
-            passwordResetTokenService.resetPassword(request.getEmail());
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .body("User with this email does not exist!");
-        }
-
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body("Email with reset url sent");
-    }
-
-    @PostMapping("/reset-password")
-    public ResponseEntity<String> resetPassword(@RequestBody ResetPasswordWithTokenRequest request) {
-        String email = passwordResetTokenService.validatePasswordResetToken(request.getToken());
-
-
-        if(email!=null) {
-            authenticationService.changePassword(email, request.getPassword());
-
-            return (ResponseEntity<String>) ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body("Password successfully changed!");
-        } else {
-            return (ResponseEntity<String>) ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
-                    .body("Invalid or expired token!");
-        }
-    }
+//    @PostMapping("/reset-password/request")
+//    public ResponseEntity<String> resetPasswordRequest(@RequestBody ResetPasswordRequest request) {
+//
+//        try {
+//            passwordResetTokenService.resetPassword(request.getEmail());
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//            return ResponseEntity
+//                    .status(HttpStatus.NOT_FOUND)
+//                    .body("User with this email does not exist!");
+//        }
+//
+//
+//        return ResponseEntity
+//                .status(HttpStatus.OK)
+//                .body("Email with reset url sent");
+//    }
+//
+//    @PostMapping("/reset-password")
+//    public ResponseEntity<String> resetPassword(@RequestBody ResetPasswordWithTokenRequest request) {
+//        String email = passwordResetTokenService.validatePasswordResetToken(request.getToken());
+//
+//
+//        if(email!=null) {
+//            authenticationService.changePassword(email, request.getPassword());
+//
+//            return (ResponseEntity<String>) ResponseEntity
+//                    .status(HttpStatus.OK)
+//                    .body("Password successfully changed!");
+//        } else {
+//            return (ResponseEntity<String>) ResponseEntity
+//                    .status(HttpStatus.BAD_REQUEST)
+//                    .body("Invalid or expired token!");
+//        }
+//    }
 
 }

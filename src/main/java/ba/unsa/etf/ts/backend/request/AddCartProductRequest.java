@@ -9,7 +9,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class AddCartProductRequest {
     private Integer productId;
-    private Integer userId;
+    private String userEmail;
     @NotNull(message = "Quantity of product must be specified")
     @PositiveOrZero(message = "Quantity of product must be positive number")
     private Integer quantity;

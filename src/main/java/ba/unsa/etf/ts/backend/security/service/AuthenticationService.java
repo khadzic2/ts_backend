@@ -53,17 +53,6 @@ public class AuthenticationService {
         this.authenticationManager = authenticationManager;
     }
 
-
-    public User getUserByEmail(String email) {
-        var user = userRepository.findByEmail(email);
-
-        if(user.isPresent()) {
-            return user.get();
-        } else {
-            return null;
-        }
-    }
-
 //    public AuthResponse register(RegisterRequest registerRequest) {
 //        var role = roleRepository.findById(registerRequest.getRoleId()).get();
 //        var user = new User(registerRequest.getFirstname(),
@@ -87,7 +76,7 @@ public class AuthenticationService {
     }
 
     public AuthResponse authenticate(AuthCredentials authRequest) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                     authRequest.getEmail(),
                     authRequest.getPassword()));
 
@@ -137,8 +126,7 @@ public class AuthenticationService {
                 var accessToken = jwtService.generateToken(roleMap,userDetails);
                 revokeAllUserTokens(userDetails);
                 saveToken(userDetails, accessToken);
-                var authResponse = new AuthResponse(accessToken,refreshToken,userDetails);
-                return authResponse;
+                return new AuthResponse(accessToken,refreshToken,userDetails);
             }
         }
 

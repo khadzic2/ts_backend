@@ -29,6 +29,7 @@ public class UserController {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<Object> getUserById(@PathVariable Integer id){
         return ResponseEntity.ok(userService.getUser(id));
@@ -38,7 +39,7 @@ public class UserController {
 //    public ResponseEntity<Object> getUserByUsername(@PathVariable String username){
 //        return ResponseEntity.ok(userService.getUserByUsername(username));
 //    }
-
+    @PreAuthorize("hasAuthority('USER')")
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateUserById(@PathVariable Integer id, @RequestBody @Valid UpdateUserRequest newUser){
         return ResponseEntity.ok(userService.updateUser(id,newUser));
@@ -52,14 +53,9 @@ public class UserController {
             return ResponseEntity.badRequest().body(new ErrorResponse("Already exist",e.getMessage()));
         }
     }
-
+    @PreAuthorize("hasAuthority('USER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteUser(@PathVariable Integer id){
         return ResponseEntity.ok(userService.deleteUser(id));
-    }
-
-    @DeleteMapping
-    public ResponseEntity<Object> deleteAllUsers(){
-        return ResponseEntity.ok(userService.deleteAll());
     }
 }

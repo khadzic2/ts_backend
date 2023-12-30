@@ -74,9 +74,4 @@ public class UserService {
         userRepository.deleteById(id);
         return "User successfully deleted!";
     }
-
-    public String deleteAll(){
-        userRepository.deleteAll();
-        return "Successfully deleted!";
-    }
 }

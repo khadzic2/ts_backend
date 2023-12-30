@@ -11,5 +11,4 @@ public class UpdateCartProductRequest {
     @NotNull(message = "Quantity of product must be specified")
     @PositiveOrZero(message = "Quantity of product must be positive number")
     private Integer quantity;
-    private String size;
 }

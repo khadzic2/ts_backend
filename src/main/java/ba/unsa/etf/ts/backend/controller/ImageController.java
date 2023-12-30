@@ -5,6 +5,7 @@ import ba.unsa.etf.ts.backend.services.ImageService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -37,12 +38,12 @@ public class ImageController {
         Image image = imageService.getImage(id);
         return ResponseEntity.ok().body(image);
     }
-
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping(value = "/image", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<Object> uploadPicture(@RequestPart("file") MultipartFile file) throws IOException {
         return new ResponseEntity<>(imageService.addImage(file), HttpStatus.CREATED);
     }
-
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/image/{id}")
     public ResponseEntity<Object> deletePicture(@PathVariable final Integer id) {
         return ResponseEntity.ok(imageService.deleteImage(id));

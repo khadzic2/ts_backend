@@ -44,6 +44,7 @@ public class User implements UserDetails {
     private String email;
 
     @Column(name = "password", columnDefinition = "VARCHAR(60)")
+    @JsonIgnore
     private String password;
 
     @Column(name = "phonenumber", columnDefinition = "VARCHAR(60)")
@@ -55,7 +56,7 @@ public class User implements UserDetails {
     @JoinColumn(name = "role_id")
     private Role role;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Token> userTokens;
 

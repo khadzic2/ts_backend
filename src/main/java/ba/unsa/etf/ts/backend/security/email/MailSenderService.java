@@ -1,4 +1,4 @@
-package ba.unsa.etf.ts.backend.security.service;
+package ba.unsa.etf.ts.backend.security.email;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;

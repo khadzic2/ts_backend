@@ -1,5 +1,6 @@
 package ba.unsa.etf.ts.backend.security.service;
 
+import ba.unsa.etf.ts.backend.security.email.MailSenderService;
 import ba.unsa.etf.ts.backend.security.repository.PasswordResetTokenRepository;
 import ba.unsa.etf.ts.backend.security.repository.UserRepository;
 import ba.unsa.etf.ts.backend.security.entity.PasswordResetToken;
