@@ -32,8 +32,8 @@ public class CategoryService {
         return categoryRepository.findAll();
     }
 
-    public List<Product> getProductsByCategoryName(GetProductsByCategoryName name){
-        return productRepository.findAllByCategory_Name(name.getName());
+    public List<Product> getProductsByCategoryName(String name){
+        return productRepository.findAllByCategory_Name(name);
     }
 
     public String deleteCategory(Integer id){

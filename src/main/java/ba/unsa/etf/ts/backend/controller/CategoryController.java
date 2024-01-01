@@ -34,8 +34,8 @@ public class CategoryController {
         return ResponseEntity.ok(categoryService.getCategory(id));
     }
 
-    @GetMapping("/category/products")
-    public ResponseEntity<Object> getProductsByCategoryName(@RequestBody GetProductsByCategoryName name){
+    @GetMapping("/category/products/{name}")
+    public ResponseEntity<Object> getProductsByCategoryName(@PathVariable String name){
         return ResponseEntity.ok(categoryService.getProductsByCategoryName(name));
     }
 

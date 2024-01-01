@@ -42,7 +42,7 @@ public class WebSecurityConfig{
                 .permitAll()
                 .requestMatchers(HttpMethod.GET,"/api/category/{id}")
                 .permitAll()
-                .requestMatchers(HttpMethod.GET,"/api/category/products")
+                .requestMatchers(HttpMethod.GET,"/api/category/products/{name}")
                 .permitAll()
                 .requestMatchers(HttpMethod.GET,"/api/image/{id}")
                 .permitAll()

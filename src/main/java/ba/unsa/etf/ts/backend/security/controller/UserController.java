@@ -53,11 +53,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<Object> addUser(@RequestBody @Valid AddUserRequest addUserRequest){
-        try {
-            return new ResponseEntity<>(userService.addUser(addUserRequest), HttpStatus.CREATED);
-        } catch (BadRequestException e) {
-            return ResponseEntity.badRequest().body(new ErrorResponse("Already exist",e.getMessage()));
-        }
+        return new ResponseEntity<>(userService.addUser(addUserRequest), HttpStatus.CREATED);
     }
 
     @PreAuthorize("hasAuthority('USER')")
