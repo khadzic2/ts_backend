@@ -1,7 +1,7 @@
 package ba.unsa.etf.ts.backend.request;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -9,7 +9,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class AddCartProductRequest {
     private Integer productId;
-    private Integer userId;
+    private String userEmail;
     @NotNull(message = "Quantity of product must be specified")
     @PositiveOrZero(message = "Quantity of product must be positive number")
     private Integer quantity;
