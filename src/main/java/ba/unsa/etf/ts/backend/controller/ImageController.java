@@ -27,17 +27,17 @@ public class ImageController {
 //        return ResponseEntity.ok(imageService.findAll());
 //    }
 
-//    @GetMapping("/image/{id}")
-//    public ResponseEntity<byte[]> getPicture(@PathVariable Integer id){
-//        Image image = imageService.getImage(id);
-//        return ResponseEntity.ok().contentType(MediaType.valueOf(image.getType())).body(image.getImageData());
-//    }
-
     @GetMapping("/image/{id}")
-    public ResponseEntity<Image> getPicture(@PathVariable Integer id){
+    public ResponseEntity<byte[]> getPicture(@PathVariable Integer id){
         Image image = imageService.getImage(id);
-        return ResponseEntity.ok().body(image);
+        return ResponseEntity.ok().contentType(MediaType.valueOf(image.getType())).body(image.getImageData());
     }
+
+//    @GetMapping("/image/{id}")
+//    public ResponseEntity<Image> getPicture(@PathVariable Integer id){
+//        Image image = imageService.getImage(id);
+//        return ResponseEntity.ok().body(image);
+//    }
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping(value = "/image", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<Object> uploadPicture(@RequestPart("file") MultipartFile file) throws IOException {

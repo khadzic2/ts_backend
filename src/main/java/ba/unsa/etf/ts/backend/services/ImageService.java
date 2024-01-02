@@ -17,23 +17,11 @@ public class ImageService {
         this.imageRepository = imageRepository;
     }
 
-//    public List<Image> findAll() {
-////        return imageRepository.findAll()
-////                .stream()
-////                .map(image -> mapToDTO(image, new ImageDTO()))
-////                .collect(Collectors.toList());
-//        return imageRepository.findAll();
-//    }
-
     public String deleteImage(final Integer id) {
         imageRepository.findById(id).orElseThrow(()->new NotFoundException("Image by id:"+id+" does not exist."));
         imageRepository.deleteById(id);
         return "Successfully deleted!";
     }
-
-//    public void deleteAll() {
-//        imageRepository.deleteAll();
-//    }
 
     public Image getImage(Integer id){
         Image image = imageRepository.findById(id).orElse(null);
@@ -49,18 +37,4 @@ public class ImageService {
         pImage.setType(file.getContentType());
         return imageRepository.save(pImage);
     }
-
-//    private ImageDTO mapToDTO(final Image image, final ImageDTO imageDTO) {
-//        imageDTO.setId(image.getId());
-//        imageDTO.setName(image.getName());
-//        imageDTO.setType(image.getType());
-//        imageDTO.setImageData(ImageUtil.decompressImage(image.getImageData()));
-//        return imageDTO;
-//    }
-//
-//    private void mapToEntity(final MultipartFile file, final Image image) throws IOException{
-//        image.setName(file.getOriginalFilename());
-//        image.setType(file.getContentType());
-//        image.setImageData(ImageUtil.compressImage(file.getBytes()));
-//    }
 }
